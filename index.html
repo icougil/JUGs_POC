@@ -1,0 +1,25 @@
+---
+layout: default
+title: test
+---
+
+<p>
+Here have the list of JUGS, now ordered by Founded date.
+We can also work with the list of jugs no matter how they are saved and created by the JUG leaders and offer later the possibility of ordering dynamically (via JS) with other fields, country name, etc
+</p>
+
+{% assign jugs = site.jugs | sort: 'founded_date' %}
+<ul>
+    {% for jug in jugs %}
+        <li>
+            <article>
+                <h2>{{ jug.name }}</h2>
+                <p>Location: {{ jug.location }}<p/>
+                <p>Date founded: {{ jug.founded_date }}<p/>
+                <p>Country {{ jug.country }}<p/>
+                <p></p><a href="{{ jug.website }}">Website</a><p/>
+                <p></p><a href="{{ jug.twitter }}">Twitter</a><p/>
+            </article>
+        </li>
+    {% endfor %}
+</ul>
