@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JUGS demo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Leaflet style. REQUIRED! -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+
+</head>
+
+<body>
+
+<h1>JUG's Map Demo</h1>
+
+
+<div id="map" class="map" style="height: 500px"></div>
+
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+<script src="leaflet-providers.js"></script>
+<script src="jugs-map.js"></script>
+
+    <script>
+        var map = L.map('map').setView([39.74739, -105], 15);
+		var defaultLayer = L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
+
+
+        function onEachFeature(feature, layer) {
+			var popupContent = "<p>I started out as a GeoJSON " +
+					feature.geometry.type + ", but now I'm a Leaflet vector!</p>";
+			if (feature.properties && feature.properties.popupContent) {
+				popupContent += feature.properties.popupContent;
+			}
+			layer.bindPopup(popupContent);
+		}
+
+    var dukeIcon = L.icon({
+			iconUrl: 'duke-icon.png',
+			iconSize: [52, 57],
+			iconAnchor: [16, 37],
+			popupAnchor: [0, -28]
+		});
+
+    var coorsLayer = L.geoJson(bicycleRental, {
+
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: dukeIcon});
+        },
+
+        onEachFeature: onEachFeature
+    }).addTo(map);
+
+
+	</script>
+
+</body>
+
+</html>
