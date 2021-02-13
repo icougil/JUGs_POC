@@ -16,14 +16,21 @@ leaflet: true
 {% assign jugs = site.jugs | sort: 'founded_date' %}
 <ul>
     <script>
+        function onMapClick(e) {
+            console.log("You clicked at: "+e.latlng);
+        }
+
         var mymap = L.map('jugsMap').setView([0, 0], 1);
+        mymap.on('click', onMapClick);
+
     </script>
     <script>
     {% for jug in jugs %}
         {% assign coordinates = jug.location | strip | split: "," %}
         {% assign longitude = coordinates[0] %}
         {% assign latitude = coordinates[1] %}
-        L.marker([{{ longitude }}, {{ latitude }}]).addTo(mymap).bindPopup("<b>{{ jug.name }}!</b>");
+        var popup = "<b>{{ jug.name }}</b><br><a href='{{ jug.website }}'>website</a>";
+        L.marker([{{ longitude }}, {{ latitude }}]).addTo(mymap).bindPopup(popup);
     {% endfor %}
     </script>
 </ul>
