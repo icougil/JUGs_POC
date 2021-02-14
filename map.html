@@ -25,12 +25,19 @@ leaflet: true
 
     </script>
     <script>
+      var dukeIcon = L.icon({
+          iconUrl: 'images/duke-icon.png',
+          iconSize: [42, 47],
+          iconAnchor: [16, 37],
+          popupAnchor: [0, -28]
+        });
+      
     {% for jug in jugs %}
         {% assign coordinates = jug.location | strip | split: "," %}
         {% assign longitude = coordinates[0] %}
         {% assign latitude = coordinates[1] %}
         var popup = "<b>{{ jug.name }}</b><br><a href='{{ jug.website }}'>website</a>";
-        L.marker([{{ longitude }}, {{ latitude }}]).addTo(mymap).bindPopup(popup);
+        L.marker([{{ longitude }}, {{ latitude }}],{icon: dukeIcon}).addTo(mymap).bindPopup(popup);
     {% endfor %}
     </script>
 </ul>
@@ -45,6 +52,7 @@ leaflet: true
         tileSize: 512,
         zoomOffset: -1
     }).addTo(mymap);
+    
+
 
 </script>
-
